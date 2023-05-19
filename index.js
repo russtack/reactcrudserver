@@ -26,11 +26,26 @@ app.get("/books", (req, res) => {
 });
 
 app.post("/books", (req, res) => {
-  const q = "INSERT INTO books (`title`,`desc`, `cover`) VALUES(?)";
-  const values = [req.body.title, req.body.desc, req.body.cover];
+  const q = "INSERT INTO books (`title`,`desc`,`price`, `cover`) VALUES(?)";
+  const values = [
+    req.body.title,
+    req.body.desc,
+    req.body.price,
+    req.body.cover,
+  ];
   db.query(q, [values], (err, data) => {
     if (err) return res.send(err);
     return res.json("bjok kreated");
+  });
+});
+
+app.delete("/books/:id", (req, res) => {
+  const bookId = req.params.id;
+  const q = "DELETE FROM books WHERE id =?";
+
+  db.query(q, [bookId], (err, data) => {
+    if (err) return res.send(err);
+    return res.json("bjok deletted");
   });
 });
 
