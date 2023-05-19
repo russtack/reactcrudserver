@@ -49,6 +49,23 @@ app.delete("/books/:id", (req, res) => {
   });
 });
 
+app.put("/books/:id", (req, res) => {
+  const bookId = req.params.id;
+  const q =
+    "UPDATE books SET `title`=?,`desc`=?,`price`=?,`cover`=? WHERE id =?";
+  const values = [
+    req.body.title,
+    req.body.desc,
+    req.body.price,
+    req.body.cover,
+  ];
+
+  db.query(q, [...values, bookId], (err, data) => {
+    if (err) return res.send(err);
+    return res.json("bjok upd");
+  });
+});
+
 app.listen(8800, () => {
   console.log("react crud back end connected!!!");
 });
